@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
-public class BaseController {
+public abstract class BaseController {
     private static final Logger log = LoggerFactory.getLogger(BaseController.class);
     @Autowired
     private HttpServletRequest request;
