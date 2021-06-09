@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.lindazf.login.jwt.web.UserControllerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in com.lindazf.login.jwt.web.UserControllerTest

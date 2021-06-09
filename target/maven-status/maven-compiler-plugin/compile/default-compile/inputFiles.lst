@@ -2,7 +2,6 @@ C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\exception
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\repository\UserRepository.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\model\LoginDto.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\service\UserService.java
-C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\model\UserData.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\entity\Role.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\web\BaseController.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\repository\RoleRepository.java
@@ -11,7 +10,6 @@ C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\exception
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\security\ApplicationUserDetailService.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\exception\ErrorMessage.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\security\JwtTokenFilter.java
-C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\model\UserDto.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\model\UserResponse.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\security\SecurityConfiguration.java
 C:\Linda\Github\projects\login-jwt\src\main\java\com\lindazf\login\jwt\exception\ApplicationExceptionDetails.java
