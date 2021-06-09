@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.lindazf.login.jwt.DemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 10.9 s <<< FAILURE! - in com.lindazf.login.jwt.DemoApplicationTests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is com.google.common.util.concurrent.ExecutionError: com.google.common.util.concurrent.ExecutionError: java.lang.NoClassDefFoundError: com/fasterxml/jackson/annotation/JsonKey
+Caused by: com.google.common.util.concurrent.ExecutionError: com.google.common.util.concurrent.ExecutionError: java.lang.NoClassDefFoundError: com/fasterxml/jackson/annotation/JsonKey
+Caused by: com.google.common.util.concurrent.ExecutionError: java.lang.NoClassDefFoundError: com/fasterxml/jackson/annotation/JsonKey
+Caused by: java.lang.NoClassDefFoundError: com/fasterxml/jackson/annotation/JsonKey
+Caused by: java.lang.ClassNotFoundException: com.fasterxml.jackson.annotation.JsonKey
+
