@@ -1,4 +1,0 @@
-com\lindazf\login\jwt\web\UserControllerTest.class
-com\lindazf\login\jwt\service\UserServiceTest.class
-com\lindazf\login\jwt\repository\UserRepositoryTest.class
-com\lindazf\login\jwt\repository\RoleRepositoryTest.class
