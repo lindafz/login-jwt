@@ -29,10 +29,6 @@ public class User {
     @ApiModelProperty(notes = "The password. Max characters = 255", position = 3, example = "A5678")
     private String password;
 
-    @Column(name = "email_address", columnDefinition = "VARCHAR(255)")
-    @ApiModelProperty(notes = "The user email address. Max characters = 255", position = 4, example = "alex@gmail.com")
-    private String emailAddress;
-
     @Column(name = "fullname", columnDefinition = "VARCHAR(255)")
     @ApiModelProperty(notes = "The user full name", position = 5, example = "Alex Wilson")
     private String fullName;

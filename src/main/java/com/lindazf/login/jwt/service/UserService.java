@@ -26,11 +26,11 @@ import java.util.Optional;
 @Transactional
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
-    private static final String VALID_USER = "VALID_USER";
+  
     private static final String INVALID_USER = "INVALID_USER";
     private static final String ENTITY_CREATE = "Create: ";
     private static final String ENTITY_UPDATE = "Update: ";
-    private static final String ENTITY_DELETE = "Delete: ";
+//    private static final String ENTITY_DELETE = "Delete: ";
 
     @Autowired
     private UserRepository userRepository;
@@ -70,9 +70,21 @@ public class UserService {
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
+    
+    public void saveUsers(List<User> users) {
+    	userRepository.saveAll(users);
+    }
+    
+    public List<Role> findAllRoles(){
+    	return roleRepository.findAll();
+    }
+    
+    public void saveRoles(List<Role> roles) {
+    	roleRepository.saveAll(roles);
+    }
 
     public Role findByRoleName(String name) {
-        return roleRepository.findByRoleName(name);
+        return roleRepository.findByRoleName(name).get();
     }
 
     public Optional<User> findByUserName(String userName) {
@@ -81,24 +93,22 @@ public class UserService {
 
     public void deleteUserById(Long userId) throws NoSuchElementException {
         log.warn("Delete user for userId = " + userId);
-        Optional<User> userOpt = userRepository.findById(userId);
         userRepository.deleteById(userId);
     }
 
     public String createUser(User user) throws ApplicationExceptionDetails {
-        User newUser = userRepository.save(user);
+        userRepository.save(user);
         String result = ENTITY_CREATE + user.getUserName();
         log.info(result);
         return result;
     }
 
     public String updateUser(User dto) throws ApplicationExceptionDetails {
-        String result = "";
-        String userName = dto.getUserName();
+               String userName = dto.getUserName();
         User user = getUserByUsername(userName).orElseThrow(() -> new ApplicationExceptionDetails(ErrorMessage.USER_NOT_EXIST + ", username = " + userName, ErrorCode.NOT_FOUND));
         userRepository.save(user);
-
-        log.info(result);
+        String result = ENTITY_UPDATE + user.getUserName();
+        log.info(result );
         return result;
     }
 

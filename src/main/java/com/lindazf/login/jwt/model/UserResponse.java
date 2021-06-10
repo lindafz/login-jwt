@@ -11,15 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
-
-
-//    @ApiModelProperty(notes = "The user name. Max characters = 255", position = 1, example = "skyadmin")
-//    private String operatorName;
-
-    @ApiModelProperty(notes = "The JWT token.", position = 2, example = "ABC.DE.FG")
+    @ApiModelProperty(notes = "The JWT token.", position = 1, example = "ABC.DE.FG")
     private String authCode;
 
-    @ApiModelProperty(notes = "The JWT token valid time in minutes", position = 3, example = "10")
+    @ApiModelProperty(notes = "The JWT token valid time in minutes", position = 2, example = "10")
     private Integer validMinutes;
 
     protected boolean authorized;
