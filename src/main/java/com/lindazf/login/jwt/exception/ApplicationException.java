@@ -1,7 +1,5 @@
 package com.lindazf.login.jwt.exception;
 
-import lombok.Getter;
-
 public class ApplicationException extends Exception{
     private static final long serialVersionUID = -472482980066743091L;
 

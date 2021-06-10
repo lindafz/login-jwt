@@ -71,16 +71,12 @@ public class UserService {
         return userRepository.findAll();
     }
     
-    public void saveUsers(List<User> users) {
-    	userRepository.saveAll(users);
-    }
-    
     public List<Role> findAllRoles(){
     	return roleRepository.findAll();
     }
     
-    public void saveRoles(List<Role> roles) {
-    	roleRepository.saveAll(roles);
+    public List<Role> saveRoles(List<Role> roles) {
+    	return roleRepository.saveAll(roles);
     }
 
     public Role findByRoleName(String name) {
@@ -96,23 +92,18 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public String createUser(User user) throws ApplicationExceptionDetails {
-        userRepository.save(user);
+    public User createUser(User user) throws ApplicationExceptionDetails {
         String result = ENTITY_CREATE + user.getUserName();
         log.info(result);
-        return result;
+        return userRepository.save(user);
     }
 
-    public String updateUser(User dto) throws ApplicationExceptionDetails {
+    public User updateUser(User dto) throws ApplicationExceptionDetails {
                String userName = dto.getUserName();
-        User user = getUserByUsername(userName).orElseThrow(() -> new ApplicationExceptionDetails(ErrorMessage.USER_NOT_EXIST + ", username = " + userName, ErrorCode.NOT_FOUND));
-        userRepository.save(user);
+        User user = findByUserName(userName).orElseThrow(() -> new ApplicationExceptionDetails(ErrorMessage.USER_NOT_EXIST + ", username = " + userName, ErrorCode.NOT_FOUND));
+       
         String result = ENTITY_UPDATE + user.getUserName();
         log.info(result );
-        return result;
-    }
-
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUserName(username);
-    }
+        return userRepository.save(user);
+    }   
 }

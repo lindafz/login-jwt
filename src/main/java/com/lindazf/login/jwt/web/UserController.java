@@ -22,83 +22,81 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RestController
 @RequestMapping(path = "/api", produces = "application/json")
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    @Autowired
-    private UserService userService;
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	@Autowired
+	private UserService userService;
 
-    @PostMapping(value = "/login")
-    @ApiOperation("Authenticate and authorize user")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        ResponseEntity<?> responseEntity = null;
-        UserResponse response = userService.signin(loginDto.getUserName(), loginDto.getPassword());
-        if (response.isAuthorized()) {
-            responseEntity = new ResponseEntity<>(response, responseHeaders, HttpStatus.OK);
-        } else {
-            responseEntity = new ResponseEntity<>(response, responseHeaders, HttpStatus.NOT_FOUND);
-        }
-        return responseEntity;
-    }
+	@PostMapping(value = "/login")
+	@ApiOperation("Authenticate and authorize user")
+	public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		ResponseEntity<?> responseEntity = null;
+		UserResponse response = userService.signin(loginDto.getUserName(), loginDto.getPassword());
+		if (response.isAuthorized()) {
+			responseEntity = new ResponseEntity<>(response, responseHeaders, HttpStatus.OK);
+		} else {
+			responseEntity = new ResponseEntity<>(response, responseHeaders, HttpStatus.NOT_FOUND);
+		}
+		return responseEntity;
+	}
 
-    @DeleteMapping("/user/{userId}")
-    @ApiOperation("Authorized Role- System Admin, Manager. Delete user by userId")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
-    public void deleteUser(@PathVariable("userId") Long userId) throws ApplicationException {
-        userService.deleteUserById(userId);
-    }
+	@DeleteMapping("/user/{userId}")
+	@ApiOperation("Authorized Role- System Admin, Manager. Delete user by userId")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+	public void deleteUser(@PathVariable("userId") Long userId) throws ApplicationException {
+		userService.deleteUserById(userId);
+	}
 
-    @GetMapping(value = "/user")
-    @ApiOperation("Authorized Role- All Roles')")
-    public ResponseEntity<?> getInternalUserByToken() {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        String userName = getUserNameByToken();
-        log.debug("internal users operator name = " + userName);
-        Optional<User>  optionalUser = userService.findByUserName(userName);
-        if(optionalUser.isPresent()){
-           return new ResponseEntity<>(optionalUser.get(), responseHeaders, HttpStatus.OK);
-        }else {
-           return new ResponseEntity<>(null, responseHeaders, HttpStatus.NOT_FOUND);
-        }
-    }
+	@GetMapping(value = "/user")
+	@ApiOperation("Authorized Role- All Roles')")
+	public ResponseEntity<?> getUserByToken() {
+		HttpHeaders responseHeaders = new HttpHeaders();
+		String userName = getUserNameByToken();
+		log.debug("internal users operator name = " + userName);
+		Optional<User> optionalUser = userService.findByUserName(userName);
+		if (optionalUser.isPresent()) {
+			return new ResponseEntity<>(optionalUser.get(), responseHeaders, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, responseHeaders, HttpStatus.NOT_FOUND);
+		}
+	}
 
-    @PostMapping("/user")
-    @ApiOperation("Authorized Role- System Admin, Manager")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> createUser(
-            @ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
-            throws ApplicationException {
-              log.debug("Create User Name : " + user.getUserName());
-        HttpHeaders responseHeaders = new HttpHeaders();
-        String operatorName = getUserNameByToken();
-       String result = userService.createUser(user);
+	@PostMapping("/user")
+	@ApiOperation("Authorized Role- System Admin, Manager")
+//	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+	public ResponseEntity<?> createUser(
+			@ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
+			throws ApplicationException {
+		log.debug("Create User Name : " + user.getUserName());
+		HttpHeaders responseHeaders = new HttpHeaders();
+		User newUser = userService.createUser(user);
 
-        ResponseEntity<?> responseEntity = new ResponseEntity<>(result, responseHeaders, HttpStatus.CREATED);
-        return responseEntity;
-    }
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(newUser, responseHeaders, HttpStatus.CREATED);
+		return responseEntity;
+	}
 
-    @PutMapping("/user")
-    @ApiOperation("Authorized Role- System Admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> updateUsers(
-            @ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
-            throws ApplicationException  {
-             log.debug("Update User Name : " + user.getUserName());
-        HttpHeaders responseHeaders = new HttpHeaders();
-        String operatorName = getUserNameByToken();
-       String result = userService.updateUser(user);
+	@PutMapping("/user")
+	@ApiOperation("Authorized Role- System Admin")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateUsers(
+			@ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
+			throws ApplicationException {
+		log.debug("Update User Name : " + user.getUserName());
+		HttpHeaders responseHeaders = new HttpHeaders();
+		User newUser = userService.updateUser(user);
 
-        ResponseEntity<?> responseEntity = new ResponseEntity<>(result, responseHeaders, HttpStatus.OK);
-        return responseEntity;
-    }
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(newUser, responseHeaders, HttpStatus.OK);
+		return responseEntity;
+	}
 
-    @GetMapping(value = "/users")
-    @ApiOperation("Authorized All Roles")
-    public ResponseEntity<?> findAllUsers(){
-        List<User>  users = userService.findAllUsers();
-        ResponseEntity<?> responseEntity = new ResponseEntity<>(users, new HttpHeaders(), HttpStatus.OK);
-        return responseEntity;
-    }
+	@GetMapping(value = "/users")
+	@ApiOperation("Authorized All Roles")
+	public ResponseEntity<?> findAllUsers() {
+		List<User> users = userService.findAllUsers();
+		ResponseEntity<?> responseEntity = new ResponseEntity<>(users, new HttpHeaders(), HttpStatus.OK);
+		return responseEntity;
+	}
 
 }

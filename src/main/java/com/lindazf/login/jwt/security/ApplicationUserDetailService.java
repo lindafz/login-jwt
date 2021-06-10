@@ -21,7 +21,6 @@ import java.util.Optional;
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 @Component
-//@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class ApplicationUserDetailService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(ApplicationUserDetailService.class);
     @Autowired
@@ -119,7 +118,7 @@ public class ApplicationUserDetailService implements UserDetailsService {
     public List<Role> getRoleList() throws ApplicationExceptionDetails {
         List<Role> roleList = new ArrayList<>();
 
-        Role role = userService.getUserByUsername(userName).get().getRole();
+        Role role = userService.findByUserName(userName).get().getRole();
         roleList.add(role);
 
         return roleList;

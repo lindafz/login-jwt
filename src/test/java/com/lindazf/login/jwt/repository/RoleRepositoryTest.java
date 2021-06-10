@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.lindazf.login.jwt.dataloader.Constants;
 import com.lindazf.login.jwt.entity.Role;
 import com.lindazf.login.jwt.utils.TestDataConstant;
 
