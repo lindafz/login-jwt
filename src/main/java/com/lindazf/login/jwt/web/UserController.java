@@ -50,7 +50,7 @@ public class UserController extends BaseController {
 	}
 
 	@GetMapping(value = "/user")
-	@ApiOperation("Authorized Role- All Roles')")
+	@ApiOperation("Authorized Role- All Roles")
 	public ResponseEntity<?> getUserByToken() {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		String userName = getUserNameByToken();
@@ -65,7 +65,7 @@ public class UserController extends BaseController {
 
 	@PostMapping("/user")
 	@ApiOperation("Authorized Role- System Admin, Manager")
-//	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
 	public ResponseEntity<?> createUser(
 			@ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
 			throws ApplicationException {
