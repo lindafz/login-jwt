@@ -29,6 +29,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.lindazf.login.jwt.entity.Role;
 import com.lindazf.login.jwt.entity.User;
@@ -51,6 +52,9 @@ class UserServiceTest {
 
 	@Mock
 	private JwtProvider jwtProvider;
+	
+	@Mock
+	private PasswordEncoder passwordEncoder;
 
 	@Mock
 	private AuthenticationManager authenticationManager;
@@ -186,8 +190,8 @@ class UserServiceTest {
 		User user = new User();
 		user.setRole(optionalRole.get());
 		user.setUserId(1L);
+		user.setPassword(passwordEncoder.encode(TestDataConstant.TEST_PASSWORD));
 		user.setUserName(TestDataConstant.TEST_USER_NAME);
-		user.setPassword(TestDataConstant.TEST_PASSWORD);
 
 		when(userRepository.save(any())).thenReturn(optionalUser.get());
 		user = userService.createUser(user);
