@@ -5,10 +5,12 @@ import com.lindazf.login.jwt.entity.User;
 import com.lindazf.login.jwt.exception.ApplicationExceptionDetails;
 import com.lindazf.login.jwt.exception.ErrorCode;
 import com.lindazf.login.jwt.exception.ErrorMessage;
+import com.lindazf.login.jwt.model.UserDto;
 import com.lindazf.login.jwt.model.UserResponse;
 import com.lindazf.login.jwt.repository.RoleRepository;
 import com.lindazf.login.jwt.repository.UserRepository;
 import com.lindazf.login.jwt.security.JwtProvider;
+import com.lindazf.login.jwt.utils.Constant;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +61,7 @@ public class UserService {
 			response.setAuthorized(false);
 			log.error("invalid user or password : " + username + ", password = " + password);
 		} else {
-			User user = existedUser.get();
-			roles.add(user.getRole());
+			User user = existedUser.get();			
 			if (!passwordEncoder.matches(password, user.getPassword())) {
 				response.setAuthCode(INVALID_USER);
 				response.setAuthorized(false);
@@ -68,7 +69,7 @@ public class UserService {
 				
 			} else {
 				log.info("user is valid: " + username + ", password = " + password);
-				
+				roles.add(user.getRole());
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 				String token = jwtProvider.createToken(username, roles);
 				int validMinutes = jwtProvider.getValidMinutes();
@@ -111,20 +112,57 @@ public class UserService {
 		userRepository.deleteById(userId);
 	}
 
-	public User createUser(User user) throws ApplicationExceptionDetails {
+	public User createUser(UserDto dto) throws ApplicationExceptionDetails {
+		User user = convertModelToEntity(dto);
 		String result = ENTITY_CREATE + user.getUserName();
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
 		log.info(result);
 		return userRepository.save(user);
 	}
 
-	public User updateUser(User dto) throws ApplicationExceptionDetails {
-		String userName = dto.getUserName();
-		User user = findByUserName(userName).orElseThrow(() -> new ApplicationExceptionDetails(
-				ErrorMessage.USER_NOT_EXIST + ", username = " + userName, ErrorCode.NOT_FOUND));
-		dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+	//User should able to remember his/her password
+	public User updateUser(UserDto dto) throws ApplicationExceptionDetails {
+		User user = convertModelToEntity(dto);
 		String result = ENTITY_UPDATE + user.getUserName();
-		log.info(result);
-		return userRepository.save(dto);
+		user.setPassword(passwordEncoder.encode(dto.getPassword()));
+		log.info(result);	
+		return userRepository.save(user);
+	}
+	
+	private User convertModelToEntity(UserDto dto) throws ApplicationExceptionDetails{
+		User user = new User();
+		String userName = dto.getUserName();
+		String roleName = dto.getRoleName();
+		
+		Optional<User> dbUser = findByUserName(userName);
+		if(dbUser.isPresent()) {
+			user.setUserId(dbUser.get().getUserId());
+		}
+		
+		Role dbRole = roleRepository.findByRoleName(roleName).orElseThrow(() -> new ApplicationExceptionDetails(ErrorMessage.ROLE_NOT_EXIST, ErrorCode.NOT_FOUND));
+		user.setRole(dbRole);
+		user.setPassword(dto.getPassword());
+		user.setUserName(userName);
+		user.setFullName(dto.getFullName());
+		return user;
+	}
+	
+	/**
+	 * Password set here is only for demo project. Real project should 
+	 * never set password this way
+	 * This demo project does not have the frontend
+	 * @param user
+	 * @return
+	 * @throws ApplicationExceptionDetails
+	 */
+	private UserDto converEntityToModel(User user) throws ApplicationExceptionDetails{
+		UserDto dto = new UserDto();
+		dto.setUserId(user.getUserId());
+		dto.setUserName(user.getUserName());
+		//password should not set here in the real world
+		dto.setPassword(user.getPassword());
+		dto.setFullName(user.getFullName());
+		dto.setRoleName(user.getRole().getRoleName());
+		return dto;
 	}
 }

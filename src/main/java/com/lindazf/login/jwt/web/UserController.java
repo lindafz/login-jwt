@@ -3,6 +3,7 @@ package com.lindazf.login.jwt.web;
 import com.lindazf.login.jwt.entity.User;
 import com.lindazf.login.jwt.exception.ApplicationException;
 import com.lindazf.login.jwt.model.LoginDto;
+import com.lindazf.login.jwt.model.UserDto;
 import com.lindazf.login.jwt.model.UserResponse;
 import com.lindazf.login.jwt.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -50,7 +51,7 @@ public class UserController extends BaseController {
 	}
 
 	@GetMapping(value = "/user")
-	@ApiOperation("Authorized Role- All Roles")
+	@ApiOperation("Authorized All Roles")
 	public ResponseEntity<?> getUserByToken() {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		String userName = getUserNameByToken();
@@ -64,14 +65,14 @@ public class UserController extends BaseController {
 	}
 
 	@PostMapping("/user")
-	@ApiOperation("Authorized Role- System Admin, Manager")
-	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+	@ApiOperation("Authorized All Roles for demo purpose")
+	//For demo only. So anyone can create a new user
 	public ResponseEntity<?> createUser(
-			@ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
+			@ApiParam(name = "User create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody UserDto userDto)
 			throws ApplicationException {
-		log.debug("Create User Name : " + user.getUserName());
+		log.debug("Create User Name : " + userDto.getUserName());
 		HttpHeaders responseHeaders = new HttpHeaders();
-		User newUser = userService.createUser(user);
+		User newUser = userService.createUser(userDto);
 
 		ResponseEntity<?> responseEntity = new ResponseEntity<>(newUser, responseHeaders, HttpStatus.CREATED);
 		return responseEntity;
@@ -81,11 +82,11 @@ public class UserController extends BaseController {
 	@ApiOperation("Authorized Role- System Admin")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> updateUsers(
-			@ApiParam(name = "User edit/create request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody User user)
+			@ApiParam(name = "User edit request", value = "The request body is a JSON value representing the user information", required = true) @RequestBody UserDto dto)
 			throws ApplicationException {
-		log.debug("Update User Name : " + user.getUserName());
+		log.debug("Update User Name : " + dto.getUserName());
 		HttpHeaders responseHeaders = new HttpHeaders();
-		User newUser = userService.updateUser(user);
+		User newUser = userService.updateUser(dto);
 
 		ResponseEntity<?> responseEntity = new ResponseEntity<>(newUser, responseHeaders, HttpStatus.OK);
 		return responseEntity;

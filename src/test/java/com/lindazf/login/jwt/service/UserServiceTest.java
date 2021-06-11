@@ -33,7 +33,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.lindazf.login.jwt.entity.Role;
 import com.lindazf.login.jwt.entity.User;
-import com.lindazf.login.jwt.exception.ApplicationExceptionDetails;
 import com.lindazf.login.jwt.repository.RoleRepository;
 import com.lindazf.login.jwt.repository.UserRepository;
 import com.lindazf.login.jwt.security.JwtProvider;
@@ -185,19 +184,5 @@ class UserServiceTest {
 		verify(userRepository).deleteById(anyLong());
 	}
 
-	@Test
-	void createUser() throws ApplicationExceptionDetails {
-		User user = new User();
-		user.setRole(optionalRole.get());
-		user.setUserId(1L);
-		user.setPassword(passwordEncoder.encode(TestDataConstant.TEST_PASSWORD));
-		user.setUserName(TestDataConstant.TEST_USER_NAME);
-
-		when(userRepository.save(any())).thenReturn(optionalUser.get());
-		user = userService.createUser(user);
-
-		assertNotNull(user);
-		verify(userRepository).save(any());
-	}
 
 }

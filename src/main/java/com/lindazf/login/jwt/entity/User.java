@@ -2,8 +2,6 @@ package com.lindazf.login.jwt.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,12 +23,11 @@ public class User {
     private String userName;
 
     @Column(name = "password", columnDefinition = "VARCHAR(255)", nullable = false)
-    @JsonIgnore
     @ApiModelProperty(notes = "The password. Max characters = 255", position = 3, example = "A5678")
     private String password;
 
     @Column(name = "fullname", columnDefinition = "VARCHAR(255)")
-    @ApiModelProperty(notes = "The user full name", position = 5, example = "Alex Wilson")
+    @ApiModelProperty(notes = "The user full name", position = 4, example = "Alex Wilson")
     private String fullName;
 
     @ManyToOne

@@ -33,7 +33,7 @@ public class Role implements GrantedAuthority {
     private String roleName;
 
     @Column(name = "role_description", columnDefinition = "VARCHAR(255)")
-    @ApiModelProperty(notes = "The role description. Max characters = 255", position = 3, example = "Sky Admin")
+    @ApiModelProperty(notes = "The role description. Max characters = 255", position = 3, example = "System Admin")
     private String roleDescription;
 
     @Override

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.lindazf.login.jwt.entity.Role;
 import com.lindazf.login.jwt.entity.User;
 import com.lindazf.login.jwt.exception.ApplicationExceptionDetails;
+import com.lindazf.login.jwt.model.UserDto;
 import com.lindazf.login.jwt.service.UserService;
 import com.lindazf.login.jwt.utils.Constant;
 
@@ -63,15 +64,14 @@ public class DataLoader {
 		
 	}
 	
-	private void createUser(String userName, String password, String fullName, String rolename) throws ApplicationExceptionDetails {
-		User user = new User();
-		user.setFullName(fullName);
-		user.setUserName(userName);
+	private void createUser(String userName, String password, String fullName, String roleName) throws ApplicationExceptionDetails {
+		UserDto dto = new UserDto();
+		dto.setFullName(fullName);
+		dto.setUserName(userName);
 		log.info("password = " + password);
-		user.setPassword(userService.encodePassword(password));
-		Role role = userService.findByRoleName(rolename);
-		user.setRole(role);
-		userService.createUser(user);
+		dto.setPassword(password);
+		dto.setRoleName(roleName);	
+		userService.createUser(dto);
 		
 	}
 }
