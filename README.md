@@ -22,7 +22,7 @@ This repository contains the following contents:
 * The project is configured using circleCI by default
 
 ## Swagger UI:
-* ![] (images/Swagger-UI.png 100X20)
+* ![] (images/Swagger-UI.png)
 * http://localhost:9090/swagger-ui.html#
 
 ## Request URL
