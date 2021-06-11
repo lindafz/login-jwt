@@ -21,6 +21,21 @@ This repository contains the following contents:
 ## Unit Test and CI Pipeline
 * The project is configured using circleCI by default
 
+## Swagger UI:
+* ![] (images/Swagger-UI.png 100X20)
+* http://localhost:9090/swagger-ui.html#
+
+## Request URL
+* http://localhost:9090/api/login  (POST)
+* http://localhost:9090/api/user   (GET)
+* http://localhost:9090/api/user   (POST)
+* http://localhost:9090/api/user   (PUT)
+* http://localhost:9090/api/user/{userID}  (DELETE)
+* http://localhost:9090/api/users   (GET)
+
+## Port Configuration
+* application.properties - server.port=9090
+
 ## Known Issues
 * The code is for demonstration puporse. Some code may not follow the best practice
-* No Java comments 
+* No Java comments
