@@ -21,7 +21,7 @@ public class LoginApplication {
 	public static void main(String[] args) {
 		log.info("Spring Boot Project is started.");
 		SpringApplication.run(LoginApplication.class, args);
-		log.info("Spring Boot Project is finished.");
+	
 	}
 
 	@Bean

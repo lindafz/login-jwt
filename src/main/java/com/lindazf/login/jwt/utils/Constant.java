@@ -1,6 +1,6 @@
-package com.lindazf.login.jwt.dataloader;
+package com.lindazf.login.jwt.utils;
 
-public class Constants {
+public class Constant {
 	public static final String ADMIN = "ROLE_ADMIN";
 	public  static final String ADMIN_DESC = "System Admin";
 	public  static final String MANAGER = "ROLE_MANAGER";
@@ -10,7 +10,7 @@ public class Constants {
 	
 	public static final String USER_ADMIN = "admin";
 	public static final String USER_ADMIN_NAME = "peter wang";
-	public  static final String PASSWORD = "demo";
+	public  static final String PASSWORD = "British!01";
 	public  static final String USER_MANAGER = "manager";
 	public  static final String USER_MANAGER_NAME = "simon li";
 	public  static final String USER_STAFF = "staff";
