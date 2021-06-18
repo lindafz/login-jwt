@@ -10,7 +10,7 @@
 
 ## Instruction for Installation
 * Download source code from GitHub
-* Create login_hwt schema in mysql
+* Create login_jwt schema in mysql
 * Update application.properties to your username and password
 * MVN clean compile
 * Run the SpringBoot or LoginApplication Application from either IntelliJ or Eclipse
