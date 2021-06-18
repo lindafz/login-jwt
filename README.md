@@ -1,8 +1,6 @@
-# Sring Data and JWT Login
+# Spring Data and JWT login application
 
-## Spring Data and JWT login application
-
-This repository contains the following contents:
+## Features:
  1. Spring MVC
  2. Spring JPA Mapping
  3. Spring security
@@ -20,6 +18,7 @@ This repository contains the following contents:
 
 ## Unit Test and CI Pipeline
 * The project is configured using circleCI by default
+* Junit5 and Mockito Unit Test
 
 ## Swagger UI:
 * <img src="images/Swagger-UI.png" width=100>
